@@ -47,6 +47,7 @@ export const fetchCategoriesAsync = createAsyncThunk(
   async () => {
     const response = await fetchCategories();
     return response.data;
+ 
   }
 );
 
