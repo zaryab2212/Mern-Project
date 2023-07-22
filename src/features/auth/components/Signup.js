@@ -5,7 +5,7 @@ import {
   incrementAsync,
  
 } from '../authSlice';
-import { Link , Navigate} from 'react-router-dom';
+import { Link , Navigate  } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { selectLogedInUser, createUserAsync } from '../authSlice';
 
