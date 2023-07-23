@@ -78,7 +78,7 @@ export const cartSlice = createSlice({
         state.status = "loading"
       })
       .addCase(deleteFromCartAsync.fulfilled, (state,action)=>{
-       const index = state.items.findIndex((e)=> e.id ===action.payload)
+       const index = state.items.findIndex((e)=> e.id ===action.payload.id)
 
         state.items.splice(index,1)
       })
