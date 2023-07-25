@@ -5,6 +5,7 @@ import { createOrder, fetchCount } from './orderAPI';
 const initialState = {
   orders: [],
   status: 'idle',
+  currentOrder: null,
 };
 
 
@@ -25,12 +26,17 @@ export const orderSlice = createSlice({
     increment: (state) => {
       state.value += 1;
     },
+    resetOrders: (state)=>{
+      state.currentOrder = null
+    }
   },
+
   extraReducers: (builder) => {
     builder
     .addCase(createOrderAsync.fulfilled, (state,action)=>{
         state.status = "idle"
         state.orders.push(action.payload)
+        state.currentOrder= action.payload
 
       })
       .addCase(createOrderAsync.pending,(state,action)=>{
@@ -39,8 +45,8 @@ export const orderSlice = createSlice({
   },
 });
 
-export const { increment } = orderSlice.actions;
+export const { resetOrders } = orderSlice.actions;
 
-export const selectCount = (state) => state.counter.value;
+export const selectcurrentOrder = (state) => state.order.currentOrder;
 
 export default orderSlice.reducer;

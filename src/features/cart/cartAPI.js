@@ -34,12 +34,28 @@ export function updateCart(update){
 
 export  function deleteFromCart(itemid){
   return new Promise( async (resolve) => {
-    const response = await fetch("http://localhost:8080/" + itemid,{
+    const response = await fetch("http://localhost:8080/cart/" + itemid,{
       method: "DELETE",
       headers:{'content-type': 'application/json'}
     })
-    const data =await response.json()
+    const data = await response.json()
     resolve({data:{id:itemid}})
 
   })
+}
+
+export  function resetCart(userId) {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetchItemsByUserId(userId)
+    const items = response.data
+    for (let item of items){
+      await  deleteFromCart(item.id)
+    }  
+    resolve({status: "success"})
+  })
+  
+
+
+
+
 }

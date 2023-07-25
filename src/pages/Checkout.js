@@ -10,13 +10,14 @@ import {
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { selectLogedInUser, updateUserAsync } from "../features/auth/authSlice";
-import { createOrderAsync } from "../features/order/orderSlice";
+import { createOrderAsync,selectcurrentOrder } from "../features/order/orderSlice";
 
 function Checkout() {
 
   const [selectedAddress,setSelectedAddress] = useState(null)
   const [selectedPaymentMethod,setSelectedPaymentMethod] = useState("cash")
   const user = useSelector(selectLogedInUser);
+  const currentOrder = useSelector(selectcurrentOrder)
   const {
     register,
     reset,
@@ -47,13 +48,14 @@ function Checkout() {
     setSelectedPaymentMethod(e.target.value )
   }
   const handleOrder = (e) =>  {
-    const order = {user, items, totalItems, totalAmount, selectedPaymentMethod, selectedAddress}
+    const order = {user, items, totalItems, totalAmount, selectedPaymentMethod, selectedAddress, status:"pending"}
     console.log(order)
     dispatch(createOrderAsync(order))
   }
   return (
     <>  
       {!items.length && <Navigate to="/" replace={true} />}
+      {currentOrder && <Navigate to={`/order-success/${currentOrder?.id}`} replace={true} />}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
@@ -144,7 +146,7 @@ function Checkout() {
 
                     <div className="col-span-full">
                       <label
-                        htmlFor="street-address"
+                        htmlFor="street"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Street address
@@ -152,11 +154,11 @@ function Checkout() {
                       <div className="mt-2">
                         <input
                           type="text"
-                          {...register("street-address", {
+                          {...register("street", {
                             required: "street address is required",
                           })}
-                          id="street-address"
-                          autoComplete="street-address"
+                          id="street"
+                          autoComplete="street"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
