@@ -11,12 +11,13 @@ import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { selectLogedInUser, updateUserAsync } from "../features/auth/authSlice";
 import { createOrderAsync,selectcurrentOrder } from "../features/order/orderSlice";
+import { selectUserInfo } from "../features/user/userSlice";
 
 function Checkout() {
 
   const [selectedAddress,setSelectedAddress] = useState(null)
   const [selectedPaymentMethod,setSelectedPaymentMethod] = useState("cash")
-  const user = useSelector(selectLogedInUser);
+  const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectcurrentOrder)
   const {
     register,
