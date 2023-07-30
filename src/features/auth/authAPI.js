@@ -13,6 +13,13 @@ export function createUser(userData) {
   });
 }
 
+export function signOut(){
+  return new Promise( async (resolve, reject) => {
+  
+    resolve({data: 'success'})
+  })
+}
+
 // ********************Login Verfication
 
 export function checkUser(logininfo) {

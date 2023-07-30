@@ -1,5 +1,6 @@
 import NavBar from "../features/navbar/Navbar";
 import ProductList from "../features/product/components/ProductList";
+import {Link} from "react-router-dom"
 
 function Home() {
     return ( 
@@ -7,6 +8,7 @@ function Home() {
             <NavBar>
                 <ProductList></ProductList>
             </NavBar>
+            <Link to="/admin">dkfjkdjdf</Link>
         </div>
      );
 }

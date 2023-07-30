@@ -9,7 +9,7 @@ import {
   selectBrands,
   selectcategories,
   selecttotalItems,
-} from "../productSlice";
+} from "../../product/productSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -37,7 +37,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductList() {
+export default function AdminProductList() {
   const dispatch = useDispatch();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const product = useSelector(selectAllProducts);
@@ -99,6 +99,10 @@ export default function ProductList() {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoriesAsync());
   }, []);
+
+  // const handledelete = (id) =>{
+  //   dispatch()
+  // }
 
   return (
     <div className="bg-white">
@@ -190,9 +194,8 @@ export default function ProductList() {
 
               {/* Product grid */}
               <div className="lg:col-span-3">
-                <ProductGrid product={product
                 
-                } />
+                <ProductGrid product={product} />
               </div>
               {/* Product grid end */}
             </div>
@@ -329,14 +332,22 @@ function MobileFilter({
     </>
   );
 }
+
 function ProductGrid({ product }) {
   return (
-    <>
+    <> <div>
+      <Link to= "/admin/product-form">  <button  className="flex w-full mx-auto justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+    Add New Product
+    </button>
+    </Link>
+  
+  </div>
+    
       {/* This is our products list  */}
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-            {product.map((product) => (
+            {product.map((product) => <div> 
               <Link to={`/product-detail/${product.id}`} key={product.id}>
                 <div className="group relative border-solid border-2 p-2 border-gray-200">
                   <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
@@ -374,12 +385,31 @@ function ProductGrid({ product }) {
                       </p>
                     </div>
                   </div>
-                  {product.delete &&  <div>
+                 {product.delete &&  <div>
                     <p className="text-sm text-red-400">Deleted Product</p>
                   </div>} 
+                 
                 </div>
-              </Link>
-            ))}
+              
+              </Link> 
+              <div className="flex m-auto justify-between mx-2">
+                <div>
+                  <Link to= {`/admin/product-form/edit/${product.id}`}  >
+                <button className="flex w-full mx-auto  my-2 justify-center rounded-md bg-indigo-600 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Edit
+                </button>
+                </Link>
+              </div>
+                {/* <div>
+                  <Link to= {`/admin/${product.id}`}  >
+                <button onClick={handledelete(product.id)} className="flex w-full mx-auto  my-2 justify-center rounded-md bg-red-600 px-5 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Delate
+                </button>
+                </Link>
+              </div> */}
+              </div>
+            </div>
+            )}
           </div>
         </div>
       </div>
@@ -445,19 +475,19 @@ function DesktiopFilter({ handleFilter, filters }) {
   );
 }
 function Pagination({ handlePage, setpage, page, totalItems }) {
-  const totalPage = Math.ceil(totalItems / ITEMS_PER_PAGE)
+  const totalPage = Math.ceil(totalItems / ITEMS_PER_PAGE);
   return (
     <>
       <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
         <div className="flex flex-1 justify-between sm:hidden">
           <div
-             onClick={()=> handlePage( page > 1 ? page - 1 : page)}
-             className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            onClick={() => handlePage(page > 1 ? page - 1 : page)}
+            className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Previous
           </div>
           <div
-             onClick={()=>handlePage(page === totalPage ? page  : page +1)}
+            onClick={() => handlePage(page === totalPage ? page : page + 1)}
             className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Next
@@ -465,7 +495,6 @@ function Pagination({ handlePage, setpage, page, totalItems }) {
         </div>
         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
           <div>
-
             <p className="text-sm text-gray-700">
               Showing{" "}
               <span className="font-medium">
@@ -486,10 +515,10 @@ function Pagination({ handlePage, setpage, page, totalItems }) {
               aria-label="Pagination"
             >
               <div
-               onClick={()=> handlePage( page > 1 ? page - 1 : page)}
+                onClick={() => handlePage(page > 1 ? page - 1 : page)}
                 className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
               >
-                <span  className="sr-only">Previous</span>
+                <span className="sr-only">Previous</span>
                 <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
               </div>
               {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
@@ -512,7 +541,7 @@ function Pagination({ handlePage, setpage, page, totalItems }) {
               ))}
 
               <div
-                onClick={()=>handlePage(page === totalPage ? page  : page +1)}
+                onClick={() => handlePage(page === totalPage ? page : page + 1)}
                 className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
               >
                 <span className="sr-only">Next</span>

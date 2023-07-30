@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  increment,
-  incrementAsync,
- 
-} from '../authSlice';
-import { Link , Navigate  } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { selectLogedInUser, createUserAsync } from '../authSlice';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { increment, incrementAsync } from "../authSlice";
+import { Link, Navigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { selectLogedInUser, createUserAsync } from "../authSlice";
 
 export default function Signup() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const user = useSelector(selectLogedInUser)
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const user = useSelector(selectLogedInUser);
   const dispatch = useDispatch();
-console.log(errors)
-console.log(register)
+  console.log(errors);
+  console.log(register);
 
-console.log(user)
+  console.log(user);
   return (
     <>
-{user && <Navigate to="/"></Navigate>}
+      {user && <Navigate to="/"></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -33,72 +34,103 @@ console.log(user)
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form noValidate className="space-y-6"  onSubmit={handleSubmit((data)=>{
-        
-            dispatch(createUserAsync( {email:data.email , password: data.password , addresses:[]  }))
-          })}
+          <form
+            noValidate
+            className="space-y-6"
+            onSubmit={handleSubmit((data) => {
+              dispatch(
+                createUserAsync({
+                  email: data.email,
+                  password: data.password,
+                  addresses: [],
+                  role: "user",
+                })
+              );
+            })}
           >
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
                 <input
-               
                   id="email"
-                  {...register("email",{ required: "email is required" ,  pattern: {value :  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i , message: "Please input a valid email address"}})}
+                  {...register("email", {
+                    required: "email is required",
+                    pattern: {
+                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                      message: "Please input a valid email address",
+                    },
+                  })}
                   type="email"
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              {errors.email &&<p className='text-red-500'>{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
-                
               </div>
               <div className="mt-2">
                 <input
-             
                   id="password"
-                {...register("password" ,{ required: "password is required" , pattern: {value : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm , message: `- at least 8 characters \n
-                - must contain at least 1 uppercase letter, \n 1 lowercase letter, and 1 number`}} )}
+                  {...register("password", {
+                    required: "password is required",
+                    pattern: {
+                      value:
+                        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+                      message: `- at least 8 characters \n
+                - must contain at least 1 uppercase letter, \n 1 lowercase letter, and 1 number`,
+                    },
+                  })}
                   type="password"
-               
-                  
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              {errors.password &&<p className='text-red-500'>{errors.password.message}</p>}
-
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Confirm Password
                 </label>
-              
               </div>
               <div className="mt-2">
                 <input
-               
                   id="confirmPasword"
-    {...register("confirmPasword",{ required: "Pasword doest not match"     ,  validate: (value, formValues) => value === formValues.password || "password doest not match"
-  })}
+                  {...register("confirmPasword", {
+                    required: "Pasword doest not match",
+                    validate: (value, formValues) =>
+                      value === formValues.password ||
+                      "password doest not match",
+                  })}
                   type="password"
-                
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              {errors.confirmPasword &&<p className='text-red-500'>{errors.confirmPasword.message}</p>}
-
+              {errors.confirmPasword && (
+                <p className="text-red-500">{errors.confirmPasword.message}</p>
+              )}
             </div>
 
             <div>
@@ -112,8 +144,11 @@ console.log(user)
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Already a Member?{' '}
-            <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            Already a Member?{" "}
+            <Link
+              to="/login"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Log In
             </Link>
           </p>

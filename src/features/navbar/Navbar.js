@@ -8,31 +8,27 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectitems } from "../cart/cartSlice";
+import { selectLogedInUser } from "../auth/authSlice";
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
+  { name: "Dashboard", link: "#", user: false },
+  { name: "Team", link: "#", user: false },
+  { name: "Admin", link: "/admin", admin: true },
 ];
 const userNavigation = [
   { name: "My Profile", link: "/profile" },
   { name: "My Orders", link: "/orders" },
-  { name: "Sign out", link: "/login" },
+  { name: "Sign out", link: "/logout" },
 ];
 
 function classNames(...classes) {
-
-  
   return classes.filter(Boolean).join(" ");
 }
 
 function NavBar({ children }) {
-  const items = useSelector(selectitems)
+  const items = useSelector(selectitems);
+  const user = useSelector(selectLogedInUser)
   return (
     <>
       <div className="min-h-full">
@@ -53,21 +49,23 @@ function NavBar({ children }) {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className={classNames(
-                              item.current
-                                ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                          >
-                            {item.name}
-                          </a>
-                        ))}
+                        {navigation.map((item) =>
+                          item[user.role] ? (
+                            <Link
+                              key={item.name}
+                              to={item.link}
+                              className={classNames(
+                                item.current
+                                  ? "bg-gray-900 text-white"
+                                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                "rounded-md px-3 py-2 text-sm font-medium"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.name}
+                            </Link>
+                          ) : null
+                        )}
                       </div>
                     </div>
                   </div>
@@ -86,7 +84,7 @@ function NavBar({ children }) {
                         </button>
                       </Link>
                       <span className="inline-flex items-center rounded-md mb-7 -ml-3 bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      {items.length}
+                        {items.length}
                       </span>
 
                       {/* Profile dropdown */}
@@ -199,7 +197,7 @@ function NavBar({ children }) {
                       </button>
                     </Link>
                     <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                    {items.length}
+                      {items.length}
                     </span>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
