@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { selectLogedInUser, updateUserAsync } from "../features/auth/authSlice";
 import { createOrderAsync,selectcurrentOrder } from "../features/order/orderSlice";
 import { selectUserInfo } from "../features/user/userSlice";
+import { discountedPrice } from "../app/constants";
 
 function Checkout() {
 
@@ -29,7 +30,7 @@ function Checkout() {
   const items = useSelector(selectitems);
   const [open, setOpen] = useState(true);
   const totalAmount = items.reduce(
-    (amount, item) => item.price * item.quantity + amount,
+    (amount, item) => discountedPrice(item) * item.quantity + amount,
     0
   );
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);

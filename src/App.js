@@ -1,4 +1,3 @@
-import { Counter } from './features/counter/Counter';
 import './App.css';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
@@ -10,7 +9,6 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import Cart from './features/cart/Cart';
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -21,18 +19,16 @@ import { fetchItemsByUserIdAsync } from './features/cart/cartSlice';
 import { selectLogedInUser } from './features/auth/authSlice';
 import ErrorPage from './pages/ErrorPage';
 import OrderSucess from './pages/OrderSuccess';
-import UserOrders from './features/user/componets/UserOrders';
 import UserOrdersPage from './pages/UserOrdersPage';
-import UserProfile from './features/user/componets/UserProfile';
 import UserProfilePage from './pages/UserProfilePage';
 import { fetchLoggedInInfoAsync } from './features/user/userSlice';
 import LogOut from './features/auth/components/LogOut';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
-import ProtectedAdmin from './features/auth/components/ProtectedAdmin';
 import AdminHome from './pages/AdminHome';
 import AdminProductDetail from './features/admin/components/AdminProductDetail';
-import ProductForm from './features/admin/components/ProductForm';
 import AdminProductFormPage from './pages/AdminProductFormPage';
+import AdminOrdersPage from './pages/AdminOrdersPage';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -40,15 +36,20 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <Protected> <AdminHome/> </Protected>,
+
+    element: <AdminHome></AdminHome> 
   },
   {
     path: '/admin/product-form',
-    element: <Protected> <AdminProductFormPage></AdminProductFormPage> </Protected>,
+    element:   <AdminProductFormPage></AdminProductFormPage> 
+  },
+  {
+    path: '/admin/orders',
+    element: <AdminOrdersPage></AdminOrdersPage>  
   },
   {
     path: '/admin/product-form/edit/:id',
-    element: <Protected> <AdminProductFormPage></AdminProductFormPage> </Protected>,
+    element:  <AdminProductFormPage></AdminProductFormPage>
   },
 
   {
@@ -73,7 +74,7 @@ const router = createBrowserRouter([
   },  
   { 
     path: '/admin/product-detail/:id',
-    element: <ProtectedAdmin><AdminProductDetail/> </ProtectedAdmin>,
+    element: <AdminProductDetail/> 
   },  
   { 
     path: '/order-success/:id',

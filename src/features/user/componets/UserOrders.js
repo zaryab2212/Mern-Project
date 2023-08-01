@@ -7,6 +7,7 @@ import {
 } from '../userSlice';
 import { fetchLoggedInUserOrdersAsync } from '../userSlice';
 import { selectLogedInUser } from '../../auth/authSlice';
+import { discountedPrice } from '../../../app/constants';
 
 export default function UserOrders() {
 
@@ -53,7 +54,7 @@ export default function UserOrders() {
                           <h3>
                             <a href={item.href}>{item.name}</a>
                           </h3>
-                          <p className="ml-4">{item.price}</p>
+                          <p className="ml-4">{discountedPrice(item)}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {item.brand}

@@ -95,3 +95,20 @@ export function updateProduct(update){
   } )
 
 }
+
+
+// export function deleteProduct(id){
+//   return new Promise((resolve, reject) => {
+//     const response = fetch(`http://localhost:8080/products/`+id),{
+//       method: "DELETE",
+//       body:JSON.stringify(id),
+//       headers: 'content-type': 'application/json'
+//     }
+  
+
+//   }
+  
+//   const data = response.json()
+// resolve ({data})
+//   )
+// } 
