@@ -11,13 +11,14 @@ const OrderSucess = () => {
   const user = useSelector(selectLogedInUser)
 
   useEffect(()=>{
-    dispatch(resetCartAsync(user.id))  
+    dispatch(resetCartAsync(user._id))  
     dispatch(resetOrders())
   },[dispatch,user])
 
 
   return (
     <>
+
     {!params.id && <Navigate to="/" replace= {true} />}
     <div>
       <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">

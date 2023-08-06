@@ -3,7 +3,7 @@ import { json } from "react-router-dom";
 
 export function createUser(userData) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/users", {
+    const response = await fetch("http://localhost:8080/auth/signup ", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
@@ -13,31 +13,31 @@ export function createUser(userData) {
   });
 }
 
-export function signOut(){
-  return new Promise( async (resolve, reject) => {
-  
-    resolve({data: 'success'})
-  })
+export function signOut() {
+  return new Promise(async (resolve, reject) => {
+    resolve({ data: "success" });
+  });
 }
 
 // ********************Login Verfication
 
 export function checkUser(logininfo) {
   return new Promise(async (resolve, reject) => {
-    const email = logininfo.email;
-    const password = logininfo.password;
-    const response = await fetch("http://localhost:8080/users?email=" + email);
-
-    const data = await response.json();
-    if (data.length) {
-      if ( password ===  data[0].password) {
-        resolve({ data: data[0] });
+    try {
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        body: JSON.stringify(logininfo),
+        headers: { "content-type": "application/json" },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        resolve({ data });
       } else {
-        reject({ message: "wronge credentials" });
+        const error = await response.json();
+        reject({ error });
       }
-    } else {
-      reject({ message: "user not found" });
+    } catch (error) {
+      reject({ error });
     }
   });
 }
-

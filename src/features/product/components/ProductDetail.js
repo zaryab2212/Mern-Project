@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {selectProductById , fetchAllProductByIdAsync} from "../productSlice"
 
 import { useParams } from 'react-router-dom'
-import { addToCartAsync } from '../../cart/cartSlice'
+import { addToCartAsync, selectitems } from '../../cart/cartSlice'
 import { selectLogedInUser } from '../../auth/authSlice'
 const colors =[
   { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
@@ -39,7 +39,9 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
   const product = useSelector(selectProductById)
+ 
   const user = useSelector(selectLogedInUser)
+  const items = useSelector(selectitems)
   const dispatch = useDispatch()
   const params = useParams()
   useEffect(()=>{
@@ -49,16 +51,25 @@ export default function ProductDetail() {
  
   const handleCart =(e)=>{
   e.preventDefault()
-   const newItem = {...product,quantity:1,user:user.id}
-  delete newItem["id"]
-dispatch(addToCartAsync(newItem))
+  if(items?.findIndex(item=>item.product.id === product.id)<0  ){
+    const newItem = {product:product.id,quantity:1,user:user.id}
+   dispatch(addToCartAsync(newItem))
+
+  } else{
+    console.log("item already added")
+  }
+
+
 }
 
   return (
+
     <div className="bg-white">
+        {console.log(items)}
    {product &&   <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                       
             {product.breadcrumbs && product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
@@ -91,7 +102,7 @@ dispatch(addToCartAsync(newItem))
         <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
           <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
             <img
-              src={product.images[0]}
+              src={product?.images[0]}
               alt={product.title}
               className="h-full w-full object-cover object-center"
             />

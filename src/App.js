@@ -74,7 +74,7 @@ const router = createBrowserRouter([
   },  
   { 
     path: '/admin/product-detail/:id',
-    element: <AdminProductDetail/> 
+    element: <AdminProductDetail/>   
   },  
   { 
     path: '/order-success/:id',
@@ -113,9 +113,11 @@ function App() {
 
   useEffect(()=>{
     if (user){
-  dispatch(fetchItemsByUserIdAsync(user.id))
-  dispatch(fetchLoggedInInfoAsync(user.id))
-  }  },[dispatch,user?.id])
+      console.log(user)
+  dispatch(fetchItemsByUserIdAsync(user))
+  dispatch(fetchLoggedInInfoAsync(user))
+ 
+  }  },[dispatch,user])
 
   return (
     <div className="App">
