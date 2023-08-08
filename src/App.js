@@ -28,6 +28,7 @@ import AdminHome from './pages/AdminHome';
 import AdminProductDetail from './features/admin/components/AdminProductDetail';
 import AdminProductFormPage from './pages/AdminProductFormPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
+import { ProtectedAdmin } from './features/auth/components/ProtectedAdmin';
 
 const router = createBrowserRouter([
   {
@@ -37,19 +38,19 @@ const router = createBrowserRouter([
   {
     path: '/admin',
 
-    element: <AdminHome></AdminHome> 
+    element: <ProtectedAdmin> <AdminHome></AdminHome> </ProtectedAdmin>
   },
   {
     path: '/admin/product-form',
-    element:   <AdminProductFormPage></AdminProductFormPage> 
+    element: <ProtectedAdmin>  <AdminProductFormPage></AdminProductFormPage> </ProtectedAdmin>
   },
   {
     path: '/admin/orders',
-    element: <AdminOrdersPage></AdminOrdersPage>  
+    element: <ProtectedAdmin>  <AdminOrdersPage></AdminOrdersPage>  </ProtectedAdmin>
   },
   {
     path: '/admin/product-form/edit/:id',
-    element:  <AdminProductFormPage></AdminProductFormPage>
+    element:<ProtectedAdmin> <AdminProductFormPage></AdminProductFormPage> </ProtectedAdmin>
   },
 
   {
@@ -74,7 +75,7 @@ const router = createBrowserRouter([
   },  
   { 
     path: '/admin/product-detail/:id',
-    element: <AdminProductDetail/>   
+    element: <ProtectedAdmin><AdminProductDetail/>   </ProtectedAdmin> 
   },  
   { 
     path: '/order-success/:id',
@@ -114,8 +115,8 @@ function App() {
   useEffect(()=>{
     if (user){
       console.log(user)
-  dispatch(fetchItemsByUserIdAsync(user))
-  dispatch(fetchLoggedInInfoAsync(user))
+  dispatch(fetchItemsByUserIdAsync(user.id))
+  dispatch(fetchLoggedInInfoAsync(user.id))
  
   }  },[dispatch,user])
 

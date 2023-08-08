@@ -19,13 +19,14 @@ export default function UserOrders() {
 
 
   useEffect(()=>{
-     dispatch( fetchLoggedInUserOrdersAsync(userInfo.id))
+     dispatch( fetchLoggedInUserOrdersAsync(userInfo._id))
 
-  },[dispatch, userInfo.id])
+  },[dispatch, userInfo])
 
   return (
     <div>
-{    console.log(order)}
+  {console.log(order)}
+
   {order?.map((item)=><div>
  
      <div>
@@ -104,6 +105,7 @@ export default function UserOrders() {
                           <div className="min-w-0 flex-auto">
                             <p className="text-sm font-semibold leading-6 text-gray-900">
                               {item.selectedAddress?.name}
+                             { console.log(item.selectedAddress?.name)}
                             </p>
                             <p className="mt-1 truncate text-xs leading-5 text-gray-500">
                               {item.selectedAddress?.street

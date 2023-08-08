@@ -9,17 +9,23 @@ import {
 } from "../features/cart/cartSlice";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { selectLogedInUser,  selectUserInfo,  updateUserAsync } from "../features/user/userSlice";
-import { createOrderAsync,selectcurrentOrder } from "../features/order/orderSlice";
+import {
+  selectLogedInUser,
+  selectUserInfo,
+  updateUserAsync,
+} from "../features/user/userSlice";
+import {
+  createOrderAsync,
+  selectcurrentOrder,
+} from "../features/order/orderSlice";
 
 import { discountedPrice } from "../app/constants";
 
 function Checkout() {
-
-  const [selectedAddress,setSelectedAddress] = useState(null)
-  const [selectedPaymentMethod,setSelectedPaymentMethod] = useState("cash")
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("cash");
   const user = useSelector(selectUserInfo);
-  const currentOrder = useSelector(selectcurrentOrder)
+  const currentOrder = useSelector(selectcurrentOrder);
   const {
     register,
     reset,
@@ -36,29 +42,38 @@ function Checkout() {
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
 
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ id:item.id, quantity: +e.target?.value }));
-  
+    dispatch(updateCartAsync({ id: item.id, quantity: +e.target?.value }));
   };
 
   const handleDelete = (id) => {
     dispatch(deleteFromCartAsync(id));
   };
-  const handleAddress = (e) =>  {
-    setSelectedAddress(user.addresses[e.target.value])
-  }
-  const handlePayment = (e) =>  {
-    setSelectedPaymentMethod(e.target.value )
-  }
-  const handleOrder = (e) =>  {
-    const order = {user:user._id, items, totalItems, totalAmount, selectedPaymentMethod, selectedAddress, status:"pending"}
+  const handleAddress = (e) => {
+    setSelectedAddress(user.addresses[e.target.value]);
+  };
+  const handlePayment = (e) => {
+    setSelectedPaymentMethod(e.target.value);
+  };
+  const handleOrder = (e) => {
+    const order = {
+      user: user._id,
+      items,
+      totalItems,
+      totalAmount,
+      selectedPaymentMethod,
+      selectedAddress,
+      status: "pending",
+    };
 
-    dispatch(createOrderAsync(order))
-  }
+    dispatch(createOrderAsync(order));
+  };
   return (
-    <>  
- {console.log(user)}
+    <>
+      {console.log(user._id)}
       {!items.length && <Navigate to="/" replace={true} />}
-      {currentOrder && <Navigate to={`/order-success/${currentOrder?.id}`} replace={true} />}
+      {currentOrder && (
+        <Navigate to={`/order-success/${currentOrder?._id}`} replace={true} />
+      )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
@@ -72,7 +87,6 @@ function Checkout() {
                     ...user,
                     addresses: [...user.addresses, data],
                   })
-                
                 );
                 reset();
               })}
@@ -259,7 +273,7 @@ function Checkout() {
                       >
                         <div className="flex gap-x-4">
                           <input
-                          onChange={handleAddress}
+                            onChange={handleAddress}
                             name="address"
                             type="radio"
                             value={index}
@@ -317,7 +331,7 @@ function Checkout() {
                         </div>
                         <div className="flex items-center gap-x-3">
                           <input
-                       checked =   {selectedPaymentMethod === "card"}
+                            checked={selectedPaymentMethod === "card"}
                             id="card"
                             onChange={handlePayment}
                             value="card"
@@ -417,7 +431,7 @@ function Checkout() {
                 </p>
                 <div className="mt-6">
                   <div
-                   onClick={handleOrder}
+                    onClick={handleOrder}
                     className="flex items-center justify-center cursor-pointer rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
                     Order Now
