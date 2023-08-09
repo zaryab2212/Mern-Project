@@ -1,13 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
-export function fetchAllProducts() {
-  return new Promise(async (resolve) => {
-    //TODO: we will not hard-code server URL here
-    const response = await fetch("http://localhost:8080/products");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
+//  export function fetchAllProducts() {
+//    return new Promise(async (resolve) => {
+//     //TODO: we will not hard-code server URL here
+//     const response = await fetch("http://localhost:8080/products");
+//     const data = await response.json();
+//    resolve({ data });
+//  });
+// }
 
 export function fetchProductById(id) {
   return new Promise(async (resolve) => {
@@ -18,7 +17,7 @@ export function fetchProductById(id) {
   });
 }
 
-export function fetchProductsByFilters(filter, sort, pagination) {
+export function fetchProductsByFilters(filter, sort, pagination,admin) {
   // filter = {"category":"smartphone"}
   // TODO : on server we will support multi values
 
@@ -35,6 +34,9 @@ export function fetchProductsByFilters(filter, sort, pagination) {
   }
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
+  }
+  if (admin){
+    queryString+= "admin=true"
   }
   return new Promise(async (resolve) => {
     //TODO: we will not hard-code server URL here

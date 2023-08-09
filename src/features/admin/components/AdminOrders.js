@@ -33,6 +33,7 @@ const AdminOrders = () => {
     seteditableicon(order.id);
   };
   const handleUpdate = (e, order) => {
+     
     const newOrder = { ...order, status: e.target.value };
     dispatch(updateOrderAsnyc(newOrder));
     seteditableicon(-1);
@@ -110,7 +111,7 @@ const AdminOrders = () => {
                         <td className="py-3 px-6 text-left whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="mr-2"></div>
-                            <span className="font-medium">{order.id}</span>
+                            <span className="font-medium">{order._id}</span>
                           </div>
                         </td>
                         <td className="py-3 px-6 text-left">
@@ -121,11 +122,12 @@ const AdminOrders = () => {
                                 <div className="mr-2">
                                   <img
                                     className="w-6 h-6 rounded-full"
-                                    src={item.thumbnail}
+                                    src={item.product.thumbnail}
+                                    alt={item.product.title}
                                   />
                                 </div>
                                 <span>
-                                  {item.title} - {item.quantity} - $
+                                  {item.product.title} - {item.quantity} - $
                                   {discountedPrice(item)}
                                 </span>
                               </div>{" "}

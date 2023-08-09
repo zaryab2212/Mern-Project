@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchLoggedInUserOrders, updateUser,fetchLoggedInInfo} from './userAPI';
+import {  updateUser,fetchLoggedInInfo, fetchLoggedInUserOrders} from './userAPI';
 
 const initialState = {
 

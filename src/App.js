@@ -114,14 +114,15 @@ function App() {
 
   useEffect(()=>{
     if (user){
-      console.log(user)
-  dispatch(fetchItemsByUserIdAsync(user.id))
-  dispatch(fetchLoggedInInfoAsync(user.id))
+    
+  dispatch(fetchItemsByUserIdAsync(user?.user))
+  dispatch(fetchLoggedInInfoAsync(user?.user))
  
-  }  },[dispatch,user])
+  }  },[dispatch,user?.user])
 
   return (
     <div className="App">
+  
       <RouterProvider router={router} />
     </div>
   );

@@ -21,11 +21,11 @@ export default function UserOrders() {
   useEffect(()=>{
      dispatch( fetchLoggedInUserOrdersAsync(userInfo._id))
 
-  },[dispatch, userInfo])
+  },[dispatch, userInfo._id])
 
   return (
     <div>
-  {console.log(order)}
+  {console.log(userInfo)}
 
   {order?.map((item)=><div>
  

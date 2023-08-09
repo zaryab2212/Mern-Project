@@ -11,7 +11,7 @@ import {
   updateProductAsync,
 } from "../../product/productSlice";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 const ProductForm = () => {
   const params = useParams();
@@ -37,7 +37,7 @@ const ProductForm = () => {
       setValue("image2", selectedProduct.images[1]);
       setValue("image3", selectedProduct.images[2]);
       setValue("stock", selectedProduct.stock);
-      setValue("brand", selectedProduct.brand);
+      setValue("brand",selectedProduct.brand);
       setValue("category", selectedProduct.category);
     }
   }, [selectedProduct, setValue]);
@@ -52,12 +52,16 @@ const ProductForm = () => {
   }, [params.id, dispatch]);
 
   const handledelete= ()=>{
-    const product = {...selectedProduct, delete:true}
+    const product = {...selectedProduct, deleted : true}
+    //  product.deleted = true
     dispatch(updateProductAsync(product))
+  
   }
 
   return (
     <div>
+        
+      {/* {console.log(selectedProduct.brand)} */}
       <form
         onSubmit={handleSubmit((data) => {
           const product = { ...data };
@@ -293,7 +297,7 @@ const ProductForm = () => {
                   Brands
                 </label>
                 <select>
-                  <option>--Select Brand--</option>
+                {!params.id &&   <option>--Select Brand--</option>}
                   {brands?.map((brand) => (
                     <option value={brand?.value}> {brand?.label}</option>
                   ))}
@@ -308,7 +312,7 @@ const ProductForm = () => {
                   Categories
                 </label>
                 <select>
-                  <option>--Select Category--</option>
+                {!params.id &&  <option>--Select Category--</option>} 
                   {categories?.map((category) => (
                     <option value={category?.value}> {category?.label}</option>
                   ))}
@@ -405,7 +409,7 @@ const ProductForm = () => {
           >
             Cancel
           </button>
-      {selectedProduct &&  <button
+      {selectedProduct &&  !selectedProduct.deleted && <button
           onClick={handledelete}
             type="button"
             className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

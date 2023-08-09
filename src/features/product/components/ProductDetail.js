@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import {selectProductById , fetchAllProductByIdAsync} from "../productSlice"
+import { fetchAllProductByIdAsync, selectProductById } from "../productSlice"
 
 import { useParams } from 'react-router-dom'
 import { addToCartAsync, selectitems } from '../../cart/cartSlice'
@@ -65,7 +65,7 @@ export default function ProductDetail() {
   return (
 
     <div className="bg-white">
-        {console.log(items)}
+  
    {product &&   <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
