@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectitems } from "../cart/cartSlice";
 import { selectLogedInUser } from "../auth/authSlice";
+import { selectUserInfo } from "../user/userSlice";
 
 
 const navigation = [
@@ -30,9 +31,10 @@ function classNames(...classes) {
 function NavBar({ children }) {
   const items = useSelector(selectitems);
   const user = useSelector(selectLogedInUser)
+  const userinfo = useSelector(selectUserInfo)
   return (
     <>
-      <div className="min-h-full">
+{userinfo && <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
@@ -51,7 +53,7 @@ function NavBar({ children }) {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) =>
-                          item[user.role] ? (
+                          item[userinfo?.role] ? (
                             <Link
                               key={item.name}
                               to={item.link}
@@ -231,7 +233,7 @@ function NavBar({ children }) {
             {children}
           </div>
         </main>
-      </div>
+      </div>}
     </>
   );
 }

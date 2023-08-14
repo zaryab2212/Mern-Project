@@ -69,10 +69,10 @@ function Checkout() {
   };
   return (
     <>
-      {console.log(user._id)}
+      {console.log(user)}
       {!items.length && <Navigate to="/" replace={true} />}
       {currentOrder && (
-        <Navigate to={`/order-success/${currentOrder?._id}`} replace={true} />
+        < Navigate to={`/order-success/${currentOrder?._id}`} replace={true} />
       )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
@@ -266,7 +266,7 @@ function Checkout() {
                     Choose from Existing addresses
                   </p>
                   <ul role="list">
-                    {user.addresses?.map((address, index) => (
+                    {user?.addresses?.map((address, index) => (
                       <li
                         key={index}
                         className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200"

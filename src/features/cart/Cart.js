@@ -1,7 +1,7 @@
 
 import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteFromCartAsync, increment, incrementAsync,selectitems, updateCartAsync } from './cartSlice';
+import { deleteFromCartAsync, increment, incrementAsync,selectCartLoaded,selectitems, updateCartAsync } from './cartSlice';
 
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -14,10 +14,11 @@ export default function Cart() {
  
   const dispatch = useDispatch();
   const items = useSelector(selectitems)
+  const cartLoaded = useSelector(selectCartLoaded)
   const [open, setOpen] = useState(true);
   
-  const totalAmount = items.reduce((amount,item)=> discountedPrice(item)*item.quantity + amount ,0)
-  const totalItems = items.reduce((total,item)=> item.quantity + total ,0)
+  const totalAmount = items?.reduce((amount,item)=> discountedPrice(item.product)*item.quantity + amount ,0)
+  const totalItems = items?.reduce((total,item)=> item.quantity + total ,0)
 
   const handleQuantity =(e,item)=>{
     console.log(e.target.value)
@@ -31,8 +32,8 @@ const handleDelete = (e,id) => {
 dispatch(deleteFromCartAsync(id))}
   return (
     <>
-    {console.log(items)}
-    {!items.length && <Navigate to="/" replace= {true}/>}
+    {console.log(cartLoaded)}
+    {!items.length&&cartLoaded&&<Navigate to="/" replace= {true}/>}
       <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">

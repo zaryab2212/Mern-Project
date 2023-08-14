@@ -8,7 +8,7 @@ function Home() {
             <NavBar>
                 <ProductList></ProductList>
             </NavBar>
-            <Link to="/admin">dkfjkdjdf</Link>
+            <Link to="/admin">why all of this in not loading</Link>
         </div>
      );
 }

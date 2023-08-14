@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 
-  selectUserInfo,
+  
  selectUserOrders,
 } from '../userSlice';
 import { fetchLoggedInUserOrdersAsync } from '../userSlice';
@@ -12,22 +12,22 @@ import { selectOrders, selectcurrentOrder } from '../../order/orderSlice';
 
 export default function UserOrders() {
 
-  const userInfo = useSelector(selectUserInfo);
+ 
   const order = useSelector(selectOrders);
 
   const dispatch = useDispatch();
 
 
   useEffect(()=>{
-     dispatch( fetchLoggedInUserOrdersAsync(userInfo._id))
+     dispatch( fetchLoggedInUserOrdersAsync())
 
-  },[dispatch, userInfo._id])
+  },[dispatch])
 
   return (
     <div>
-  {console.log(userInfo)}
 
-  {order?.map((item)=><div>
+
+  {order && order?.map((item)=><div>
  
      <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">

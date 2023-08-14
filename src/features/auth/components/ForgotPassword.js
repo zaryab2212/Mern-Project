@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
  
 import { Link, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { checkUserAsync } from '../authSlice';
+// import { checkUserAsync } from '../authSlice';
 export default function ForgotPassword() {
   
 

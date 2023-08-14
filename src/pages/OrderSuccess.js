@@ -8,12 +8,11 @@ import { resetOrders } from '../features/order/orderSlice'
 const OrderSucess = () => {
   const params = useParams()
   const dispatch = useDispatch()
-  const user = useSelector(selectLogedInUser)
 
   useEffect(()=>{
-    dispatch(resetCartAsync(user._id))  
+    dispatch(resetCartAsync())  
     dispatch(resetOrders())
-  },[dispatch,user])
+  },[dispatch])
 
 
   return (

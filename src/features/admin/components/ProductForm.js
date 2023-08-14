@@ -53,7 +53,6 @@ const ProductForm = () => {
 
   const handledelete= ()=>{
     const product = {...selectedProduct, deleted : true}
-    //  product.deleted = true
     dispatch(updateProductAsync(product))
   
   }
@@ -61,9 +60,11 @@ const ProductForm = () => {
   return (
     <div>
         
-      {/* {console.log(selectedProduct.brand)} */}
+
       <form
+
         onSubmit={handleSubmit((data) => {
+          console.log(data)
           const product = { ...data };
           product.images = [
             product.thumbnail,
@@ -291,33 +292,65 @@ const ProductForm = () => {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="brands"
+                  htmlFor="brand"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Brands
+                  Brand
                 </label>
-                <select>
-                {!params.id &&   <option>--Select Brand--</option>}
-                  {brands?.map((brand) => (
-                    <option value={brand?.value}> {brand?.label}</option>
-                  ))}
-                </select>
+                <div className="mt-2">
+                  <select
+                    {...register('brand', {
+                      required: 'brand is required',
+                    })}
+                  >
+                    <option value="">--choose brand--</option>
+                    {brands?.map((brand) => (
+                      <option key={brand?.value} value={brand?.value}>
+                        {brand?.label}
+                      </option>
+                    ))}
+                  </select>
+               
+                </div>
               </div>
+                    
 
               <div className="col-span-full">
                 <label
                   htmlFor="category"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Categories
+                  Category
                 </label>
-                <select>
-                {!params.id &&  <option>--Select Category--</option>} 
-                  {categories?.map((category) => (
-                    <option value={category?.value}> {category?.label}</option>
-                  ))}
-                </select>
+                <div className="mt-2">
+                  <select
+                    {...register('category', {
+                      required: 'category is required',
+                    })}
+                  >
+                    <option value="">--choose category--</option>
+                    {categories?.map((category) => (
+                      <option key={category.value} value={category.value}>
+                        {category.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+             
             </div>
           </div>
 
