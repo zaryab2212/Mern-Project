@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 //  export function fetchAllProducts() {
 //    return new Promise(async (resolve) => {
 //     //TODO: we will not hard-code server URL here
-//     const response = await fetch("http://localhost:8080/products");
+//     const response = await fetch("/products");
 //     const data = await response.json();
 //    resolve({ data });
 //  });
@@ -11,7 +11,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export function fetchProductById(id) {
   return new Promise(async (resolve) => {
     //TODO: we will not hard-code server URL here
-    const response = await fetch("http://localhost:8080/products/"+ id );
+    const response = await fetch("/products/"+ id );
     const data = await response.json();
     resolve({ data });
   });
@@ -41,7 +41,7 @@ export function fetchProductsByFilters(filter, sort, pagination,admin) {
   return new Promise(async (resolve) => {
     //TODO: we will not hard-code server URL here
     const response = await fetch(
-      "http://localhost:8080/products?" + queryString
+      "/products?" + queryString
     );
     const data = await response.json();
     const totalItems = await response.headers.get("X-Total-Count")
@@ -51,7 +51,7 @@ export function fetchProductsByFilters(filter, sort, pagination,admin) {
 
 export function fetchCategories() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/category");
+    const response = await fetch("/category");
     const data = await response.json();
     resolve({ data });
   });
@@ -60,7 +60,7 @@ export function fetchCategories() {
 
 export function fetchBrands() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/brands");
+    const response = await fetch("/brands");
     const data = await response.json();
     resolve({ data });
   });
@@ -71,7 +71,7 @@ export function createProduct(product){
  
     return new Promise(async(resolve, reject) => {
 
-    const response = await fetch("http://localhost:8080/products/",{
+    const response = await fetch("/products/",{
       method: 'POST',
       body:   JSON.stringify(product),
       headers: {'content-type' :'application/json'}
@@ -86,7 +86,7 @@ export function createProduct(product){
 
 export function updateProduct(update){
   return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/products/'+update.id,{
+    const response = await fetch('/products/'+update.id,{
     method: 'PATCH',
     body: JSON.stringify(update),
     headers:{"content-type": "application/json"}
@@ -101,7 +101,7 @@ export function updateProduct(update){
 
 // export function deleteProduct(id){
 //   return new Promise((resolve, reject) => {
-//     const response = fetch(`http://localhost:8080/products/`+id),{
+//     const response = fetch(`/products/`+id),{
 //       method: "DELETE",
 //       body:JSON.stringify(id),
 //       headers: 'content-type': 'application/json'

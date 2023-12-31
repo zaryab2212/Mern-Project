@@ -52,8 +52,9 @@ export default function ProductDetail() {
     if (items?.findIndex((item) => item.product.id === product.id) < 0) {
       const newItem = { product: product.id, quantity: 1 };
       dispatch(addToCartAsync(newItem));
+      window.alert("Item added into cart");
     } else {
-      console.log("item already added");
+      window.alert("Item already added into cart");
     }
   };
 
